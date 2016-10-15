@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block content %}
+		<div class="row">
+				{% for employee in employees %}
+					<div class="col-md-4">
+						<a href="/employee/{{employee.number}}/">
+						<span class="link-spanner"></span>
+						</a>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="panel-title pull-left">
+									{{ employee.lastName }}, {{ employee.firstName }}
+								</div>
+								<div class="panel-title pull-right">
+									<span>  
+										{{ employee.number|Presence }}
+									</span>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel panel-body">
+								<ul class="list-group">
+									<li class="list-group-item">Letzte Buchung: {{ employee.number|lastBooking|getBookingDate|getBookingDateText }} um {{ employee.number|lastBooking|getBookingDate|date:'H:i' }} - {{ employee.number|lastBooking|getBookingType }}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		
+{% endblock %}		

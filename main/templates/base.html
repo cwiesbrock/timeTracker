@@ -1,0 +1,62 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+		<title>TimeTracker Mertens Wiesbrock</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript">
+            function redirect(url, delay) {
+                //alert("Redirecting to " + String(url) + " in " + String(delay) + " seconds")
+				setTimeout(function (){
+					// Something you want delayed.
+					window.location.href = url;
+				}, delay*1000);
+            }
+        </script>
+		<script>
+			function startTime() {
+				var today = new Date();
+				var h = today.getHours();
+				var m = today.getMinutes();
+				var s = today.getSeconds();
+				var sep;
+				if (s%2 == 0){
+				sep=":";
+				} else{
+				sep=" ";
+				}
+				
+				m = checkTime(m);
+				s = checkTime(s);
+				document.getElementById('clock').innerHTML =
+				h + String(sep) + m;
+				var t = setTimeout(startTime, 500);
+			}
+			function checkTime(i) {
+				if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+				return i;
+			}
+		</script>
+	</head>
+	<body onload="startTime()">
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="/">
+				TimeTracker
+			  </a>
+			</div>
+		  </div>
+		</nav>
+		<div class="page-header text-center">
+			<h1 id="clock"></h1>
+		</div>
+		<main class="container container-mw700" role="main">
+		{% block content %}
+		{% endblock %}
+		</main>
+	</body>
+</html>
