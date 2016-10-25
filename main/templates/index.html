@@ -14,7 +14,7 @@
 									{{ employee.lastName }}, {{ employee.firstName }}
 								</div>
 								<div class="panel-title pull-right">
-									<span>  
+									<span>
 										{{ employee.number|Presence }}
 									</span>
 								</div>
@@ -22,12 +22,12 @@
 							</div>
 							<div class="panel panel-body">
 								<ul class="list-group">
-									<li class="list-group-item">Letzte Buchung: {{ employee.number|lastBooking|getBookingDate|getBookingDateText }} um {{ employee.number|lastBooking|getBookingDate|date:'H:i' }} - {{ employee.number|lastBooking|getBookingType }}</li>
+									<li class="list-group-item"> {{ employee.number|lastBooking }} </li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				{% endfor %}
 			</div>
-		
-{% endblock %}		
+
+{% endblock %}

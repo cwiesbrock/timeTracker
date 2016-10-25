@@ -1,4 +1,4 @@
-"""Treasuregram URL Configuration
+"""Timetracker URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -23,5 +23,6 @@ urlpatterns = [
 	url(r'^employee/([0-9]+)$/', views.detail, name = 'detail'),
 	url(r'^employee/([0-9]*)/$', views.detail, name = 'detail'),
 	url(r'^employee/([0-9]*)/(start)/$', views.book, name = 'book'),
-	url(r'^employee/([0-9]*)/(end)/$', views.book, name = 'book')
-	]
+	url(r'^employee/([0-9]*)/(end)/$', views.book, name = 'book'),
+    url(r'^employee/([0-9]*)/booking/([0-9]*)/(delete)/$', views.booking, name = 'bookingChange')
+    ]

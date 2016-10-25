@@ -4,12 +4,12 @@
 {% block content %}
 
 {% if status %}
-	<div class="alert alert-success" role="alert">{{status.message}}</div>
+	<div class="alert {{ status.type }}" role="alert">{{status.message}}</div>
 {% endif %}
 
-{% if status.redirect%} 
+{% if status.redirect%}
 	<script type="text/javascript">
-		redirect("{{status.redirect}}", {{status.redirectDelay}}); 
+		redirect("{{status.redirect}}", {{status.redirectDelay}});
 	</script>
 {% endif %}
 
@@ -19,7 +19,7 @@
 			{{ employees.lastName }}, {{ employees.firstName }}
 		</div>
 		<div class="panel-title pull-right">
-			<span>  
+			<span>
 				{% if employees.number|isPresent %}
 					<span class="green">anwesend</span> <span class="glyphicon glyphicon-stop green"></span>
 				{% else %}
@@ -43,29 +43,35 @@
 				</button>
 		  </div>
 		</div>
-		<!-- Einzelbuchungen 
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr><th>Datum</th><th>Uhrzeit</th><th>Art</th></tr> 
-				</thead>
-				<tbody>
-				{% for booking in bookings %}
-					<tr><td>{% ifchanged booking.dateTime.date %}{{ booking.dateTime.date }} {% endifchanged %}</td><td>{{ booking.dateTime.time}}</td><td>{{ booking.type }}</td></tr>
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>-->
-	
+
 		<!-- Buchungspaare -->
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
-					<tr><th>Datum</th><th>Kommen</th><th>Gehen</th><th>Total</th></tr> 
+					<tr><th>Datum</th>
+							<th>Kommen</th>
+							<th>Gehen</th>
+							<th>Total</th>
+							<th>Kommentar</th>
+							<th>Aktion</th>
+					</tr>
 				</thead>
 				<tbody>
 				{% for bookingPair in bookingPairs %}
-					<tr{% if bookingPair.out == ""%} class="danger" {% endif %}><td>{% ifchanged bookingPair.date %}{{ bookingPair.date }} {% endifchanged %}</td><td>{{ bookingPair.in|time:"H:i:s" }}</td><td>{{ bookingPair.out|time:"H:i:s" }}</td><td>{{ bookingPair.total }}</td></tr>
+					<tr{% if bookingPair.bookingStatus == "E"%} class="danger" {% endif %}>
+						<td>{% ifchanged bookingPair.date %}{{ bookingPair.in|date:"l, d. F y" }} {% endifchanged %}</td>
+						<td>{{ bookingPair.in|time:"H:i:s" }}</td>
+						<td>{{ bookingPair.out|time:"H:i:s" }}</td>
+						<td>{{ bookingPair.total  }}</td>
+						<td>{{ bookingPair.comment }}</td>
+						<td>
+							<button type="button" class="btn btn-default btn-block {% if bookingPair.aktion != True %} disabled {% endif %}" aria-label="Left Align" onclick={{ bookingPair.deleteOnClick }}>
+								<span>
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</span>
+							</button>
+						</td>
+					</tr>
 				{% endfor %}
 				</tbody>
 			</table>
